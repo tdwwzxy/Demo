@@ -1,29 +1,31 @@
-# Demo
+# Research · 研究项目与资料
 
-Java、React 和 SwiftUI 示例项目合集。各项目独立运行，共用本仓库管理源码、构建脚本与项目文档。
+本目录收纳从 Demo 根目录迁入的 Java 研究台、手机网页快照、行情输入、运行脚本和本地研究资料。`ios`、`shopping`、`frontend` 与 `research` 是同级目录，各项目独立运行，共用 Demo Git 仓库。
 
 仓库地址：[tdwwzxy/Demo](https://github.com/tdwwzxy/Demo)。默认分支为 `main`。
 
-## 项目导航
+## 仓库项目导航
 
 | 项目 | 目录 / 文档 | 技术与用途 |
 |---|---|---|
 | 美债期货研究台 | [`src/`](src/)、本文下方详细说明 | Java 21、Spring Boot、Java2D；读取历史行情并生成图表 |
 | 手机网页导出 | [`mobile-site/README.md`](mobile-site/README.md) | Node.js；将研究台导出为只读静态快照 |
-| 前端学习项目 | [`frontend/README.md`](frontend/README.md) | TypeScript、React、Vite、pnpm；面向 Java 开发者的交互、CRUD 与接口学习 |
-| 拾光珠宝商城 | [`shopping/README.md`](shopping/README.md) | Java 21、Spring Boot、React、TypeScript、H2；学习用商城 |
-| iPhone 点击示例 | [`ios/README.md`](ios/README.md) | SwiftUI、Xcode；按钮与状态更新示例 |
+| 前端学习项目 | [`../frontend/README.md`](../frontend/README.md) | TypeScript、React、Vite、pnpm；面向 Java 开发者的交互、CRUD 与接口学习 |
+| 拾光珠宝商城 | [`../shopping/README.md`](../shopping/README.md) | Java 21、Spring Boot、React、TypeScript、H2；学习用商城 |
+| iPhone 点击示例 | [`../ios/README.md`](../ios/README.md) | SwiftUI、Xcode；按钮与状态更新示例 |
+
+原根目录文件及隐藏配置均已迁入 `research`；`.git` 与仓库通用 `.gitignore` 保留在 Demo 根目录。原有 Git 忽略规则继续生效：源码、文档和历史行情输入随仓库同步，日志、构建产物及此前忽略的个人资料仅在本地保存。
 
 ## 获取项目
 
 ```powershell
 git clone https://github.com/tdwwzxy/Demo.git
-cd Demo
+cd Demo/research
 ```
 
 ### 快速启动 Java 研究台
 
-安装 JDK 21 和 Maven 3.6.3+，并将它们加入 PATH。在仓库根目录执行：
+安装 JDK 21 和 Maven 3.6.3+，并将它们加入 PATH。在 `Demo/research` 目录执行：
 
 ```powershell
 # 输出到当前项目目录，避免依赖原开发电脑的 D: 盘目录
@@ -33,9 +35,9 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\start.ps1
 
 打开 [http://127.0.0.1:8080/](http://127.0.0.1:8080/)。其他项目的依赖和启动命令见各自 README。
 
-### 日常同步 GitHub
+### 日常同步研究项目到 GitHub
 
-在本目录使用已授权的 GitHub 账号执行：
+在 `Demo/research` 目录使用已授权的 GitHub 账号执行（`git add .` 只暂存研究项目；操作整个仓库时回到 Demo 根目录）：
 
 ```powershell
 git pull --ff-only

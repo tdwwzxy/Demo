@@ -1,0 +1,43 @@
+# Build outputs, dependencies and local tooling
+target/
+node_modules/
+dist/
+build/
+logs/
+.idea/
+.vscode/
+.tools/
+.verification/
+.sites-runtime/
+.openai/
+__pycache__/
+*.py[cod]
+*.tsbuildinfo
+*.log
+*.pid
+.DS_Store
+Thumbs.db
+
+# Local credentials and signing material
+.env
+.env.*
+!.env.example
+!.env.*.example
+admin-password.txt
+*.pem
+*.key
+*.p12
+*.pfx
+*.mobileprovision
+
+# Keep research inputs; regenerate reports and other local results
+/data/*
+!/data/raw/
+!/data/latest-check.json
+
+# Personal research material outside the software projects
+/购物比价资料/
+/购物比价格比质量.md
+/广州深圳国央企Java招聘汇总_2026-09-20.md
+/广州深圳Java社招_可点击链接.html
+/ABC.md

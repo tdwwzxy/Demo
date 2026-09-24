@@ -4,9 +4,9 @@
 
 ## 导出
 
-先按仓库根目录的 README 启动研究台，再安装支持内置 `fetch` 的 Node.js（建议使用本仓库商城项目所需的 Node.js 22.12+）。无需额外 npm 依赖。
+先按 [research/README.md](../README.md) 启动研究台，再安装支持内置 `fetch` 的 Node.js（建议使用本仓库商城项目所需的 Node.js 22.12+）。无需额外 npm 依赖。
 
-在仓库根目录执行：
+在 `Demo/research` 目录执行：
 
 ```powershell
 $env:REPORT_URL = 'http://127.0.0.1:8080'

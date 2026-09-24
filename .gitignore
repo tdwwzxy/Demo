@@ -1,4 +1,4 @@
-# Build outputs, dependencies and local tooling
+# Repository-wide Git exclusions. Project files are under research, ios, shopping and frontend.
 target/
 node_modules/
 dist/
@@ -29,15 +29,3 @@ admin-password.txt
 *.p12
 *.pfx
 *.mobileprovision
-
-# Keep research inputs; regenerate reports and other local results
-/data/*
-!/data/raw/
-!/data/latest-check.json
-
-# Personal research material outside the software projects
-/购物比价资料/
-/购物比价格比质量.md
-/广州深圳国央企Java招聘汇总_2026-09-20.md
-/广州深圳Java社招_可点击链接.html
-/ABC.md
