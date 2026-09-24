@@ -54,3 +54,18 @@ pnpm e2e
 需要已安装 Chrome，或设置 `CHROME_PATH`；也可以先运行 `pnpm exec playwright install chromium`。测试使用独立内存数据库，结果写入本地 `artifacts/`。
 
 生产环境的数据库、域名、HTTPS 和部署配置需要自行提供。相关服务端配置见 `backend/src/main/resources/application.properties`。
+
+## 手机访问与学习资料
+
+电脑和手机连接同一局域网。先停止服务，再运行 `./start.ps1 -ListenAddress 0.0.0.0`，使用 `ipconfig` 查看电脑的局域网 IPv4 地址。手机浏览器访问 `http://电脑的局域网IP:8091/`；手机上的 `127.0.0.1` 无法指向电脑。如果防火墙拦截，需按本机网络策略允许专用网络上的 Java / 8091 入站，脚本不会自动修改防火墙。
+
+PowerShell 禁止执行脚本时，可用 `powershell -NoProfile -ExecutionPolicy Bypass -File .\start.ps1` 本次启动。服务默认本机访问，未设置开机自启，也未发布到公网。
+
+- [Java 开发者的 React / TypeScript 学习指南](docs/LEARNING.md)
+- [接口、鉴权、订单状态与业务边界](docs/API.md)
+- 前端开发：在 `frontend` 执行 `pnpm dev`，访问 5175；后端仍运行 8091。
+- IDEA 直接运行后端时，工作目录设为 `backend`，VM options 加入 `-Djdk.net.unixdomain.tmpdir=.`，与本机启动脚本保持一致。
+
+当前为访客预订、商家确认模式，**未接入在线支付**，参考金价由后台人工维护，不是实时行情。订单关联匿名浏览器 Cookie，清除 Cookie 或更换设备后不会自动找回，请保留订单号。商品图片由用户提供的截图展示，后台支持上传自己的 JPEG / PNG 替换。
+
+商品、订单、上传图片保存在 `data` 中，重启后保留。备份前停止服务，再完整复制此目录。`SHOP_ADMIN_PASSWORD` 环境变量优先于密码文件，更改后需重启生效；`SHOP_SECURE_COOKIE=true` 仅适用于 HTTPS。
