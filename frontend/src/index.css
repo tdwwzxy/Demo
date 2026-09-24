@@ -1,0 +1,108 @@
+/*
+ * 全局 CSS：基本语法是 选择器 { 属性: 值; }，与 TS 对象的冒号很像，但属于不同语言。
+ * :root 选中根元素 html；可继承的字体 / 文字颜色会传给后代，background 则作用在根背景。
+ * 后出现的同优先级规则通常覆盖前面规则；属性是否继承要逐项判断。
+ */
+:root {
+  /* 字体回退列表：从左到右寻找可用字体；sans-serif 是通用无衬线字体族。 */
+  font-family: Inter, 'Segoe UI', 'Microsoft YaHei', system-ui, sans-serif;
+  color: #26332e;
+  background: #f6f8f7;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  font-weight: 400;
+  font-size: 14px;
+}
+/* * 是通配选择器。border-box 让指定宽高包含内容、padding 和 border，但不含 margin。 */
+* {
+  box-sizing: border-box;
+}
+body {
+  /* 去掉浏览器默认外边距；min-width 规定本学习页面支持的最小布局宽度。 */
+  margin: 0;
+  min-width: 360px;
+}
+/* 逗号连接多个选择器，共享同一组规则。inherit 让表单控件继承父元素的字体。 */
+button,
+input,
+select {
+  font: inherit;
+}
+button,
+a,
+input,
+select {
+  -webkit-tap-highlight-color: transparent;
+}
+button {
+  cursor: pointer;
+  border: 0;
+}
+/* :disabled 是伪类，匹配具有禁用状态的控件；opacity 作用于元素及其内容整体透明度。 */
+button:disabled {
+  cursor: wait;
+  opacity: 0.55;
+}
+/* :focus-visible 通常在键盘操作需要明显焦点时匹配；保留可见轮廓方便无鼠标操作。 */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 3px solid #76bc9c;
+  outline-offset: 3px;
+}
+a {
+  color: inherit;
+}
+h1,
+h2,
+h3,
+h4,
+p {
+  margin-top: 0;
+}
+h1 {
+  /* px 是 CSS 像素；line-height: 1.4 是无单位比例，约为当前字号的 1.4 倍。 */
+  letter-spacing: -1.6px;
+  font-size: 38px;
+  line-height: 1.4;
+}
+h2 {
+  font-size: 22px;
+  letter-spacing: -0.5px;
+}
+h3 {
+  font-size: 16px;
+}
+p {
+  line-height: 1.85;
+}
+code,
+/* pre 保留空白和换行；overflow:auto 在内容超出容器时提供滚动，而不是撑破布局。 */
+pre {
+  font-family: 'Cascadia Code', Consolas, monospace;
+}
+pre {
+  line-height: 1.8;
+  tab-size: 2;
+  overflow: auto;
+}
+fieldset {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  min-width: 0;
+}
+input,
+select {
+  color: #26332e;
+}
+/* [type='checkbox'] 是属性选择器，只匹配 checkbox 类型的 input。 */
+input[type='checkbox'] {
+  accent-color: #287657;
+}
+/* ::selection 是伪元素，设置用户选中文字时的颜色。CSS 使用块注释，没有 // 注释。 */
+::selection {
+  background: #b9ddca;
+}

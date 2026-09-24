@@ -1,0 +1,1210 @@
+/* 布局：左侧导航 + 主工作区，使用 Grid/Flex；无需 UI 组件库。 */
+/* .xxx 是类选择器，对应 JSX 的 className="xxx"；下文按布局 / 页面 / 响应式分组。 */
+.app-shell {
+  /* flex 默认横向排列直接子元素，所以 sidebar 和 workspace 左右并排。 */
+  display: flex;
+  /* vh 是视口高度单位：100vh 为一屏；min-height 允许内容更长时继续增长。 */
+  min-height: 100vh;
+}
+.sidebar {
+  width: 244px;
+  flex-shrink: 0; /* 窄屏时先保持侧边栏宽度，不参与 Flex 的压缩分配。 */
+  background: #fff;
+  border-right: 1px solid #e6ebe8;
+  padding: 34px 22px 22px; /* 三个值分别是 上、左右、下；margin 是外边距，padding 是内边距。 */
+  position: sticky; /* 随页面滚动到阈值后吸附，需要配合 top 等偏移值。 */
+  top: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column; /* 改为垂直主轴，便于把底部资料区推到底部。 */
+}
+.brand {
+  display: flex;
+  align-items: center; /* Flex 交叉轴居中；这里是纵向对齐图标与文字。 */
+  gap: 11px; /* 子元素之间的间距，不给容器外侧加空白。 */
+  font-size: 20px;
+  font-weight: 750;
+  letter-spacing: -0.6px;
+}
+/* 空格表示「后代」：匹配 .brand 内部任意层级的 small 元素。 */
+.brand small {
+  display: block;
+  font-size: 9px;
+  color: #829188;
+  letter-spacing: 1.4px;
+  margin-top: 6px;
+  font-weight: 500;
+}
+.brand-mark {
+  width: 42px;
+  height: 42px;
+  background: #1c4938;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 13px;
+  font-size: 32px;
+  font-family: Georgia, serif;
+}
+.brand-mark span {
+  color: #b5d398;
+}
+.sidebar-label {
+  font-size: 11px;
+  letter-spacing: 1px;
+  color: #849088;
+  margin: 48px 14px 14px;
+}
+.nav-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  text-align: left;
+  padding: 15px 13px;
+  border-radius: 9px;
+  background: transparent;
+  gap: 12px;
+  color: #65756b;
+  margin-bottom: 7px;
+  font-weight: 600;
+}
+.nav-item small {
+  display: block;
+  font-size: 10px;
+  margin-top: 5px;
+  font-weight: 400;
+  letter-spacing: 0.4px;
+  color: #84968a;
+}
+/* 无空格的两个类要求同一元素同时有 nav-item 和 current，表示选中的导航项。 */
+.nav-item.current {
+  background: #edf4ef;
+  color: #286548;
+}
+.nav-icon {
+  font-size: 23px;
+  width: 24px;
+  text-align: center;
+}
+.nav-dot {
+  background: #3a8060;
+  border-radius: 50%;
+  width: 5px;
+  height: 5px;
+  margin-left: auto;
+}
+.sidebar-progress {
+  margin: 38px 8px 20px;
+  padding: 20px 0;
+  border-top: 1px solid #edf0ee;
+}
+/* > 只选直接子元素，比空格表示的「任意后代」范围更窄。 */
+.sidebar-progress > div {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+}
+.sidebar-progress > div > span {
+  color: #327856;
+}
+.sidebar-progress progress {
+  height: 6px;
+  width: 100%;
+  border: none;
+  border-radius: 10px;
+  margin: 15px 0 9px;
+  accent-color: #4c8c68;
+}
+/* 浏览器提供的进度条伪元素；-webkit- 是特定引擎扩展，基础 progress 仍可独立显示。 */
+.sidebar-progress progress::-webkit-progress-bar {
+  background: #e8efea;
+  border-radius: 5px;
+}
+.sidebar-progress progress::-webkit-progress-value {
+  background: #4c8c68;
+  border-radius: 5px;
+}
+.sidebar-progress small {
+  font-size: 10px;
+  color: #829188;
+}
+.sidebar-progress p {
+  color: #8d9b90;
+  font-size: 12px;
+  line-height: 1.8;
+  margin: 22px 0 0;
+}
+.sidebar-footer {
+  margin-top: auto; /* 在纵向 Flex 中吸收剩余空间，把此区域推到下方。 */
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  border-top: 1px solid #eef0ee;
+  padding: 20px 8px 0;
+}
+.sidebar-footer small {
+  display: block;
+  color: #94a097;
+  font-size: 8px;
+  letter-spacing: 1.1px;
+  margin-top: 5px;
+}
+.java-avatar {
+  background: #e9eee8;
+  color: #637e65;
+  width: 31px;
+  height: 31px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-family: Georgia, serif;
+}
+.workspace {
+  min-width: 0; /* 允许 Flex 子项小于内容的默认最小宽度，避免长代码撑破整个页面。 */
+  flex: 1; /* 占据侧边栏以外的剩余水平空间。 */
+}
+.topbar {
+  height: 73px;
+  border-bottom: 1px solid #e4eae6;
+  background: #ffffffc9;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 42px;
+  font-size: 12px;
+}
+.breadcrumb {
+  margin: 0 13px;
+  color: #aab6ad;
+}
+.topbar strong {
+  font-weight: 500;
+}
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.mode-label {
+  font-size: 11px;
+  color: #6a8271;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.mode-label i {
+  width: 6px;
+  height: 6px;
+  background: #76a17e;
+  border-radius: 50%;
+}
+.version-pill {
+  border: 1px solid #e4e9e4;
+  padding: 6px 10px;
+  font-size: 8px;
+  letter-spacing: 1.3px;
+  border-radius: 5px;
+  color: #829087;
+}
+/* 没有 . 的 main 是标签选择器，匹配 <main>；max-width 限制超宽显示器上的阅读宽度。 */
+main {
+  max-width: 1370px;
+  margin: auto;
+  padding: 26px 42px 20px;
+}
+.stack-strip {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: #75857c;
+  font-size: 11px;
+  margin-bottom: 29px;
+}
+.stack-strip > span:first-child {
+  font-size: 9px;
+  letter-spacing: 1.7px;
+  color: #84978a;
+  margin-right: 10px;
+}
+.stack-strip b {
+  font-size: 18px;
+  margin-left: 13px;
+}
+.stack-strip .ts-logo {
+  font-size: 9px;
+  background: #477daf;
+  color: white;
+  width: 20px;
+  height: 20px;
+  display: grid;
+  place-items: center;
+  border-radius: 3px;
+}
+.react-logo {
+  color: #45a3b6;
+}
+.vite-logo {
+  color: #8e77ba;
+}
+.pnpm-logo {
+  color: #cba445;
+}
+.hero {
+  display: grid;
+  /* 两个等宽列；fr 表示可分配空间的份数。Grid 更适合二维卡片 / 分栏布局。 */
+  grid-template-columns: 1fr 1fr;
+  gap: 38px;
+  align-items: center;
+  padding: 22px 0 37px;
+}
+.eyebrow {
+  font-size: 9px;
+  font-weight: 650;
+  letter-spacing: 1.7px;
+  color: #728c7a;
+}
+.hero h1 {
+  font-size: 42px;
+  margin: 18px 0;
+  color: #23372c;
+  line-height: 1.42;
+}
+.hero h1 > span {
+  color: #54865f;
+}
+.hero p {
+  font-size: 13px;
+  color: #7b8e80;
+  line-height: 1.9;
+  margin: 0 0 23px;
+}
+.primary,
+.secondary {
+  border-radius: 7px;
+  font-weight: 550;
+  font-size: 12px;
+  min-height: 39px;
+  padding: 10px 17px;
+  /* 指定属性变化时的过渡时长；不会自动产生动画，需要 hover 等规则修改属性。 */
+  transition:
+    background 0.15s,
+    transform 0.15s;
+}
+.primary {
+  background: #2d654b;
+  color: #fff;
+  border: 1px solid #2d654b;
+}
+/* :hover 匹配鼠标悬停；触屏设备不能依赖悬停完成核心操作。 */
+.primary:hover {
+  background: #234f3b;
+}
+.primary > span {
+  margin-left: 18px;
+}
+.secondary {
+  border: 1px solid #dbe4dd;
+  background: #fff;
+  color: #557660;
+}
+.secondary:hover {
+  background: #f0f5f1;
+}
+.hero-code {
+  background: #1f302b;
+  border-radius: 13px;
+  color: #d2ddd6;
+  box-shadow: 0 15px 30px #263a2c10;
+  transform: rotate(-1deg); /* 视觉旋转 1 度，不改变正常文档流分配的布局空间。 */
+  min-width: 0;
+}
+.code-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 20px;
+  border-bottom: 1px solid #ffffff0d;
+}
+.code-top > span {
+  display: flex;
+  gap: 6px;
+}
+.code-top i {
+  background: #607869;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+}
+.code-top i:nth-child(2) {
+  background: #a39b70;
+}
+.code-top i:nth-child(3) {
+  background: #729276;
+}
+.code-top small {
+  font-size: 10px;
+  color: #8ba394;
+}
+.hero-code pre {
+  font-size: 12px;
+  line-height: 1.95;
+  margin: 0;
+  padding: 25px 23px;
+}
+.code-muted {
+  color: #91aa9b;
+}
+.code-purple {
+  color: #c4b0d1;
+}
+.code-green {
+  color: #b6d79b;
+}
+.code-footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 21px;
+  border-top: 1px solid #ffffff0c;
+  font-size: 9px;
+  color: #91b19f;
+}
+.section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 14px 0 21px;
+  gap: 12px;
+}
+.section-heading h2 {
+  margin: 8px 0 0;
+  font-size: 21px;
+}
+.muted {
+  color: #7a8d80;
+}
+.section-heading > .muted {
+  font-size: 11px;
+}
+.roadmap-grid {
+  display: grid;
+  /* repeat 重复 3 列；minmax(0,1fr) 允许长内容所在列收缩，不因最小内容宽度溢出。 */
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 15px;
+}
+.lesson-card {
+  background: #fff;
+  border: 1px solid #e4e9e5;
+  border-radius: 10px;
+  padding: 20px;
+  text-align: left;
+  color: #34483b;
+  transition:
+    border-color 0.15s,
+    transform 0.15s;
+}
+.lesson-card:hover {
+  border-color: #a3bbaa;
+  transform: translateY(-2px);
+}
+.lesson-card.selected {
+  border-color: #76a385;
+  box-shadow: 0 0 0 1px #76a38530;
+  background: #fcfefb;
+}
+.lesson-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+}
+.lesson-number {
+  font-family: Consolas, monospace;
+  color: #78967f;
+  background: #f0f4ef;
+  padding: 8px;
+  border-radius: 7px;
+  font-size: 15px;
+}
+.lesson-number.done {
+  color: #246845;
+  background: #dceddd;
+}
+.tag {
+  display: inline-block;
+  border: 1px solid #e5ebe5;
+  padding: 4px 8px;
+  color: #7a907e;
+  border-radius: 4px;
+  font-size: 9px;
+  font-weight: 400;
+}
+.lesson-card h3 {
+  margin-bottom: 8px;
+  font-size: 15px;
+}
+.lesson-card p {
+  font-size: 11px;
+  color: #7c8f80;
+  margin-bottom: 21px;
+}
+.lesson-bottom {
+  display: flex;
+  justify-content: space-between;
+  color: #86988a;
+  font-size: 10px;
+}
+.lesson-card.selected .lesson-bottom > span:last-child {
+  color: #518162;
+}
+.lesson-detail {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  gap: 28px;
+  margin-top: 26px;
+  background: #fff;
+  border: 1px solid #e4e9e5;
+  border-radius: 10px;
+  padding: 28px;
+}
+.lesson-explanation h2 {
+  margin: 12px 0 20px;
+  font-size: 20px;
+}
+.lesson-explanation h4 {
+  font-size: 12px;
+  margin-bottom: 7px;
+  color: #56725f;
+}
+.lesson-explanation p {
+  font-size: 12px;
+  color: #6f8276;
+}
+.exercise {
+  background: #f4f7ef;
+  border-left: 3px solid #b8cda3;
+  padding: 13px 15px;
+  margin: 20px 0;
+}
+.exercise strong {
+  font-size: 11px;
+  color: #6b855e;
+}
+.exercise p {
+  margin: 7px 0 0;
+  font-size: 11px;
+}
+.lesson-code {
+  min-width: 0;
+  padding-top: 3px;
+}
+.snippet-title {
+  background: #edf2ee;
+  padding: 12px 15px;
+  font:
+    11px Consolas,
+    monospace;
+  color: #6e8475;
+  border-radius: 7px 7px 0 0;
+}
+.lesson-code pre {
+  background: #f7f9f6;
+  padding: 18px;
+  margin: 0;
+  font-size: 11px;
+  line-height: 1.95;
+  border-radius: 0 0 7px 7px;
+  color: #536c5c;
+}
+.lesson-code > p {
+  font-size: 10px;
+  color: #839688;
+  margin-top: 12px;
+}
+.main-footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 34px;
+  padding-top: 20px;
+  border-top: 1px solid #e3e9e3;
+  font-size: 10px;
+  color: #879b8c;
+  gap: 16px;
+}
+/* 练习页面与通用控件 */
+.page-intro {
+  padding: 21px 0 24px;
+}
+.page-intro h1 {
+  font-size: 34px;
+  margin: 13px 0;
+}
+.page-intro p {
+  color: #798e80;
+  font-size: 13px;
+  margin-bottom: 0;
+}
+.two-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+}
+.panel {
+  background: white;
+  border: 1px solid #e2e9e3;
+  border-radius: 11px;
+  padding: 25px;
+  min-width: 0;
+}
+.panel h2 {
+  font-size: 19px;
+  margin: 17px 0;
+}
+.panel .muted {
+  font-size: 12px;
+}
+.counter {
+  font-size: 80px;
+  line-height: 1;
+  font-weight: 600;
+  letter-spacing: -4px;
+  color: #407956;
+  text-align: center;
+  padding: 34px 0;
+}
+.button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+.text-button {
+  color: #49765b;
+  background: none;
+  font-size: 12px;
+  padding: 6px;
+}
+.text-button:hover {
+  text-decoration: underline;
+}
+.small-code {
+  background: #f1f5f1;
+  border-radius: 7px;
+  padding: 17px;
+  font-size: 11px;
+  color: #577061;
+  margin-top: 23px;
+}
+.note {
+  font-size: 11px;
+  color: #7a8c7d;
+  margin-bottom: 0;
+  margin-top: 18px;
+  line-height: 1.9;
+}
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 12px;
+  color: #697d70;
+  margin: 18px 0;
+}
+.field input,
+.field select,
+.filters select {
+  background: #fafcf9;
+  border: 1px solid #dfe6de;
+  border-radius: 6px;
+  padding: 11px 12px;
+  width: 100%;
+  font-size: 12px;
+}
+.checkbox-field {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #7d8d80;
+  font-size: 12px;
+  margin: 20px 0;
+}
+.greeting {
+  padding: 25px;
+  background: #edf4ea;
+  border-radius: 8px;
+  margin: 25px 0;
+}
+.greeting > span {
+  font-size: 9px;
+  letter-spacing: 1.5px;
+  color: #779169;
+}
+.greeting h3 {
+  margin: 14px 0 9px;
+  font-size: 20px;
+  overflow-wrap: anywhere;
+}
+.greeting p {
+  font-size: 11px;
+  color: #748a6b;
+  margin: 0;
+}
+.empty-state {
+  text-align: center;
+  padding: 40px 15px;
+  font-size: 12px;
+  color: #7b8e76;
+}
+.tip {
+  display: flex;
+  gap: 16px;
+  padding: 15px 20px;
+  background: #edf3e9;
+  border: 1px solid #e0e9da;
+  border-radius: 8px;
+  font-size: 12px;
+  margin: 24px 0;
+  color: #6d8263;
+  line-height: 1.8;
+}
+.tip strong {
+  white-space: nowrap;
+}
+.crud-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 285px;
+  gap: 20px;
+}
+.panel-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+.panel-heading h2 {
+  margin: 0;
+}
+.panel-heading h2 > small {
+  display: inline-block;
+  margin-left: 8px;
+  background: #edf3ec;
+  font-size: 11px;
+  border-radius: 5px;
+  padding: 3px 7px;
+  color: #709060;
+}
+.filters {
+  display: flex;
+  gap: 10px;
+  margin: 22px 0;
+}
+.filters select {
+  width: 112px;
+}
+.search-input {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  min-width: 0;
+  gap: 7px;
+  background: #fafcf9;
+  border: 1px solid #dfe6de;
+  border-radius: 6px;
+  padding: 0 10px;
+  color: #84947a;
+}
+.search-input input {
+  width: 100%;
+  min-width: 0;
+  border: 0;
+  background: transparent;
+  padding: 10px 0;
+  font-size: 11px;
+  outline-offset: 0;
+}
+.table-scroll {
+  /* 手机下表格较宽时只让表格容器滚动，外部页面保持设备宽度。 */
+  overflow: auto;
+}
+table {
+  border-collapse: collapse;
+  width: 100%;
+  white-space: nowrap;
+  text-align: left;
+}
+th {
+  font-weight: 400;
+  color: #7d927b;
+  font-size: 11px;
+  background: #f8faf7;
+  padding: 12px 9px;
+}
+td {
+  border-bottom: 1px solid #f0f3ed;
+  padding: 17px 9px;
+  font-size: 11px;
+}
+.user-cell {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.avatar {
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  background: #eef2e7;
+  color: #7b9067;
+}
+.user-cell strong {
+  font-size: 12px;
+  font-weight: 550;
+}
+.user-cell small {
+  display: block;
+  font-size: 9px;
+  color: #829277;
+  margin-top: 6px;
+}
+.role-badge {
+  font-size: 10px;
+  background: #f1f4ef;
+  color: #718665;
+  padding: 4px 6px;
+  border-radius: 4px;
+}
+.status-badge {
+  font-size: 10px;
+  color: #7d8d74;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.status-badge i {
+  height: 5px;
+  width: 5px;
+  border-radius: 50%;
+  background: #bcc3b9;
+}
+.status-badge.active {
+  color: #648254;
+}
+.status-badge.active i {
+  background: #82a57a;
+}
+.row-actions {
+  display: flex;
+  gap: 5px;
+}
+.row-actions button {
+  font-size: 10px;
+}
+.danger {
+  color: #a56c5e;
+}
+.delete-confirm {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  font-size: 10px;
+  margin-top: 10px;
+}
+.delete-confirm button {
+  padding: 4px 7px;
+  color: #805848;
+  background: #f6eee8;
+  border-radius: 4px;
+}
+.table-foot {
+  font-size: 10px;
+  color: #829275;
+  margin: 18px 0 0;
+}
+.full-width {
+  width: 100%;
+  margin-top: 8px;
+}
+.alert {
+  padding: 12px 17px;
+  border-radius: 7px;
+  margin: 12px 0;
+  font-size: 12px;
+  line-height: 1.8;
+}
+.alert.error {
+  background: #fff0ec;
+  color: #a56d56;
+  border: 1px solid #eed7cd;
+}
+.alert.success {
+  background: #eaf3e4;
+  color: #63844e;
+}
+.endpoint {
+  background: #f3f6f0;
+  padding: 17px;
+  border-radius: 7px;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  margin: 22px 0;
+  overflow-wrap: anywhere;
+}
+.endpoint strong {
+  color: #5d8c55;
+  font-size: 11px;
+}
+.endpoint code {
+  font-size: 12px;
+}
+.request-flow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 35px;
+  font-size: 10px;
+  flex-wrap: wrap;
+}
+.request-flow span {
+  background: #f3f5ee;
+  padding: 10px;
+  border: 1px solid #e3e9de;
+  border-radius: 5px;
+}
+.request-flow b {
+  font-weight: 400;
+  color: #89987d;
+}
+.request-status {
+  font-size: 10px;
+  color: #7a8870;
+}
+.request-status.success {
+  color: #4e8449;
+}
+.request-status.error {
+  color: #ad6a56;
+}
+.response-panel pre {
+  height: 330px;
+  background: #203129;
+  color: #c4d4b9;
+  border-radius: 8px;
+  font-size: 11px;
+  padding: 20px;
+  margin: 20px 0 0;
+}
+.connect-guide {
+  margin-top: 23px;
+}
+.connection-steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+  margin-top: 27px;
+}
+.connection-steps span {
+  font:
+    21px Consolas,
+    monospace;
+  color: #92ac7f;
+}
+.connection-steps h3 {
+  margin: 14px 0 10px;
+  font-size: 14px;
+}
+.connection-steps p {
+  color: #7c9170;
+  font-size: 11px;
+}
+/* 跳过导航链接默认移到可见区域外，键盘聚焦时移回，方便直接进入主要内容。 */
+.skip-link {
+  position: absolute;
+  left: 15px;
+  top: -60px;
+  background: #fff;
+  padding: 10px;
+  z-index: 20;
+}
+.skip-link:focus {
+  top: 5px;
+}
+/* 响应式：宽屏三列卡片，手机两列卡片 + 顶部导航。 */
+/* @media 是媒体查询：条件成立才应用；min-width 是至少，max-width 是至多。 */
+@media (min-width: 1550px) {
+  main {
+    padding-top: 34px;
+  }
+  .hero {
+    padding-top: 32px;
+    padding-bottom: 47px;
+  }
+  .hero h1 {
+    font-size: 49px;
+  }
+  .hero-code pre {
+    font-size: 14px;
+    padding: 30px;
+  }
+  .lesson-card {
+    padding: 24px;
+  }
+}
+/* 随可用宽度减少：侧栏收窄、CRUD 列表与表单上下排列。 */
+@media (max-width: 1180px) {
+  .sidebar {
+    width: 210px;
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+  .brand {
+    font-size: 17px;
+  }
+  main {
+    padding: 23px;
+  }
+  .topbar {
+    padding: 0 23px;
+  }
+  .hero {
+    gap: 24px;
+  }
+  .hero h1 {
+    font-size: 34px;
+  }
+  .hero-code pre {
+    font-size: 10px;
+    padding: 20px 15px;
+  }
+  .crud-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .form-panel form fieldset {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 20px;
+  }
+  .form-panel .full-width {
+    align-self: center;
+  }
+  .lesson-card {
+    padding: 16px;
+  }
+}
+/* 平板宽度：课程变两列，详情变一列；装饰性的代码面板隐藏。 */
+@media (max-width: 800px) {
+  .sidebar {
+    width: 175px;
+    padding: 24px 11px;
+  }
+  .brand {
+    font-size: 15px;
+    gap: 7px;
+  }
+  .brand small {
+    font-size: 7px;
+  }
+  .brand-mark {
+    width: 32px;
+    height: 34px;
+    font-size: 27px;
+  }
+  .nav-item {
+    padding: 12px 9px;
+    gap: 7px;
+  }
+  .nav-icon {
+    font-size: 20px;
+  }
+  .nav-item small {
+    font-size: 9px;
+  }
+  .sidebar-footer {
+    font-size: 10px;
+  }
+  .sidebar-footer small {
+    font-size: 7px;
+  }
+  .hero {
+    grid-template-columns: 1fr;
+  }
+  .hero-code {
+    display: none;
+  }
+  .roadmap-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .lesson-detail,
+  .two-columns {
+    grid-template-columns: 1fr;
+  }
+  .topbar-right .version-pill {
+    display: none;
+  }
+  .connection-steps {
+    gap: 16px;
+  }
+  .stack-strip {
+    gap: 6px;
+    font-size: 9px;
+  }
+  .stack-strip b {
+    margin-left: 5px;
+  }
+  .stack-strip > span:first-child {
+    display: none;
+  }
+  .page-intro h1 {
+    font-size: 29px;
+  }
+}
+/* 手机宽度：sidebar 变顶部普通块，取消 sticky；导航按钮仍保留可点击功能。 */
+@media (max-width: 580px) {
+  .app-shell {
+    display: block;
+  }
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+    padding: 16px;
+    border-right: 0;
+    border-bottom: 1px solid #e1e8de;
+  }
+  .brand {
+    font-size: 19px;
+  }
+  .brand small {
+    font-size: 8px;
+  }
+  .sidebar-label,
+  .sidebar-progress,
+  .sidebar-footer {
+    display: none;
+  }
+  .sidebar nav {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    margin-top: 17px;
+    gap: 5px;
+  }
+  .nav-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 10px 3px;
+    margin: 0;
+    font-size: 11px;
+    text-align: center;
+  }
+  .nav-item small,
+  .nav-dot {
+    display: none;
+  }
+  .nav-icon {
+    font-size: 18px;
+  }
+  .topbar {
+    height: 51px;
+    padding: 0 19px;
+    font-size: 10px;
+  }
+  main {
+    padding: 18px;
+  }
+  .stack-strip {
+    margin-bottom: 15px;
+  }
+  .hero {
+    padding: 14px 0 25px;
+  }
+  .hero h1 {
+    font-size: 36px;
+  }
+  .eyebrow {
+    font-size: 8px;
+  }
+  .hero p {
+    font-size: 12px;
+  }
+  .section-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    margin-bottom: 17px;
+  }
+  .section-heading h2 {
+    font-size: 20px;
+  }
+  .section-heading > .muted {
+    font-size: 10px;
+  }
+  .roadmap-grid {
+    gap: 10px;
+  }
+  .lesson-card {
+    padding: 13px;
+  }
+  .lesson-card h3 {
+    font-size: 13px;
+  }
+  .lesson-card p {
+    font-size: 10px;
+    line-height: 1.6;
+    min-height: 32px;
+  }
+  .lesson-top {
+    margin-bottom: 14px;
+  }
+  .lesson-bottom {
+    font-size: 9px;
+  }
+  .tag {
+    font-size: 8px;
+    padding: 4px;
+  }
+  .lesson-number {
+    font-size: 12px;
+  }
+  .lesson-detail {
+    padding: 20px;
+    gap: 15px;
+  }
+  .main-footer {
+    flex-direction: column;
+    font-size: 9px;
+  }
+  .panel {
+    padding: 18px;
+  }
+  .tip {
+    flex-direction: column;
+    gap: 3px;
+    padding: 12px 15px;
+  }
+  .page-intro {
+    padding-top: 16px;
+  }
+  .page-intro h1 {
+    font-size: 27px;
+  }
+  .form-panel form fieldset {
+    display: block;
+  }
+  .connection-steps {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+  .connection-steps h3 {
+    display: inline-block;
+    margin-left: 15px;
+  }
+  .connection-steps p {
+    margin-bottom: 0;
+  }
+  .filters {
+    gap: 7px;
+  }
+}

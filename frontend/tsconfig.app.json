@@ -1,0 +1,30 @@
+{
+  // tsconfig 使用 JSONC（支持注释）。普通 package.json 是严格 JSON，不能照搬这些注释。
+  "compilerOptions": {
+    // 增量类型检查缓存的位置；不是业务代码或发布产物。
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
+    "target": "es2023", // 编译目标对应的 JS 语言级别；不自动补充旧浏览器缺少的 API。
+    // lib 提供标准 JS 和浏览器 DOM 的类型声明，不会安装浏览器运行时。
+    "lib": ["ES2023", "DOM"],
+    "module": "esnext",
+    "types": ["vite/client"], // 让 TS 认识 import.meta.env、CSS / 资源导入等 Vite 类型。
+    "allowArbitraryExtensions": true,
+    "skipLibCheck": true,
+    "strict": true, // 启用严格检查，包括 null / undefined 检查和隐式 any 检查。
+
+    /* 模块交给 Vite 打包：TypeScript 负责检查，Vite 负责产物。 */
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "verbatimModuleSyntax": true, // 保留值导入；纯类型请显式写 import type。
+    "moduleDetection": "force",
+    "noEmit": true, // tsc 不输出 .js 文件，避免和 Vite 重复生成产物。
+    "jsx": "react-jsx", // 使用 React 自动 JSX 运行时，不必每个组件都 import React。
+
+    /* 尽早发现未使用变量 / 参数，以及 switch 分支意外穿透等问题。 */
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "erasableSyntaxOnly": true, // 限制 TS 专属语法为可擦除形式，如避免普通 enum / 参数属性。
+    "noFallthroughCasesInSwitch": true
+  },
+  "include": ["src"] // 此配置检查 src 下的应用与测试源码。
+}

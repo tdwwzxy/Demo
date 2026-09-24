@@ -1,0 +1,5 @@
+{
+  // 根配置只是入口：tsc -b 沿 references 分别检查浏览器源码与 Node 工具配置。
+  "files": [],
+  "references": [{ "path": "./tsconfig.app.json" }, { "path": "./tsconfig.node.json" }]
+}

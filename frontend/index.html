@@ -1,0 +1,23 @@
+<!doctype html>
+<!-- HTML 声明页面结构；lang 告知浏览器和辅助技术这是简体中文页面。 -->
+<html lang="zh-CN">
+  <head>
+    <!-- UTF-8 保证中文正确显示；viewport 让手机按设备宽度布局，而非缩放桌面页面。 -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#2d654b" />
+    <meta
+      name="description"
+      content="Java 后端开发者的前端学习工作台：TypeScript、React、Vite 与 pnpm。"
+    />
+    <!-- public/ 下的文件由根路径访问，所以 public/favicon.svg 对应 /favicon.svg。 -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>Frontend Lab · Java 开发者的前端起点</title>
+  </head>
+  <body>
+    <!-- React 的挂载点；初始为空，main.tsx 的 createRoot(...).render(...) 填入应用。 -->
+    <div id="root"></div>
+    <!-- module 使用 ES 模块加载；浏览器开发时的 TSX 由 Vite 转换，不是浏览器原生理解 TS。 -->
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

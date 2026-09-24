@@ -1,0 +1,24 @@
+{
+  // 工具脚本运行在 Node 环境，与浏览器应用配置分开；此处仅覆盖 vite.config.ts。
+  "compilerOptions": {
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo",
+    "target": "es2023",
+    "lib": ["ES2023"],
+    "types": ["node"], // 提供 process 等 Node 全局对象的类型，没有 DOM 浏览器类型。
+    "skipLibCheck": true,
+
+    /* Bundler mode */
+    "module": "nodenext", // 采用与 Node ESM / CommonJS 规则相配合的模块检查方式。
+    "allowImportingTsExtensions": true,
+    "verbatimModuleSyntax": true,
+    "moduleDetection": "force",
+    "noEmit": true,
+
+    /* Linting */
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "erasableSyntaxOnly": true,
+    "noFallthroughCasesInSwitch": true
+  },
+  "include": ["vite.config.ts"]
+}

@@ -10,6 +10,7 @@ Java、React 和 SwiftUI 示例项目合集。各项目独立运行，共用本�
 |---|---|---|
 | 美债期货研究台 | [`src/`](src/)、本文下方详细说明 | Java 21、Spring Boot、Java2D；读取历史行情并生成图表 |
 | 手机网页导出 | [`mobile-site/README.md`](mobile-site/README.md) | Node.js；将研究台导出为只读静态快照 |
+| 前端学习项目 | [`frontend/README.md`](frontend/README.md) | TypeScript、React、Vite、pnpm；面向 Java 开发者的交互、CRUD 与接口学习 |
 | 拾光珠宝商城 | [`shopping/README.md`](shopping/README.md) | Java 21、Spring Boot、React、TypeScript、H2；学习用商城 |
 | iPhone 点击示例 | [`ios/README.md`](ios/README.md) | SwiftUI、Xcode；按钮与状态更新示例 |
 
